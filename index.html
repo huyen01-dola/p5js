@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>p5.js 작품 모음 — huyendola</title>
+
+  <!-- 폰트 (심미성을 위한 노력) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;1,9..144,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg:        #0d0d10;
+      --bg-soft:   #16161c;
+      --line:      #2a2a33;
+      --ink:       #f2f0ea;
+      --muted:     #8d8a9c;
+      --accent:    #e4c06a;       /* 따뜻한 금색 포인트 */
+      --static:    #6ea8c4;
+      --dynamic:   #d98a6a;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Space Mono", monospace;
+      min-height: 100vh;
+      /* 은은한 배경 그라데이션 + 그레인 느낌 */
+      background-image:
+        radial-gradient(60rem 40rem at 80% -10%, rgba(228,192,106,.07), transparent),
+        radial-gradient(50rem 40rem at -10% 110%, rgba(110,168,196,.06), transparent);
+      padding: clamp(1.5rem, 5vw, 4rem);
+    }
+
+    /* ---------- HEADER ---------- */
+    header {
+      max-width: 1100px;
+      margin: 0 auto 3rem;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 1.75rem;
+    }
+    .eyebrow {
+      font-size: .72rem;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-family: "Fraunces", serif;
+      font-weight: 400;
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      line-height: 1.05;
+      letter-spacing: -.01em;
+    }
+    h1 em { color: var(--accent); font-style: italic; }
+    header p {
+      margin-top: 1rem;
+      color: var(--muted);
+      max-width: 46ch;
+      font-size: .9rem;
+      line-height: 1.7;
+    }
+
+    /* ---------- GRID 2×2 ---------- */
+    .grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    @media (max-width: 720px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: var(--bg-soft);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: rise .7s ease forwards;
+    }
+    .card:nth-child(1) { animation-delay: .05s; }
+    .card:nth-child(2) { animation-delay: .15s; }
+    .card:nth-child(3) { animation-delay: .25s; }
+    .card:nth-child(4) { animation-delay: .35s; }
+
+    @keyframes rise {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent);
+      box-shadow: 0 18px 40px -20px rgba(0,0,0,.8);
+    }
+
+    .card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--line);
+    }
+    .card-head h2 {
+      font-family: "Fraunces", serif;
+      font-weight: 500;
+      font-size: 1.15rem;
+    }
+    .tag {
+      font-size: .62rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      padding: .3rem .6rem;
+      border-radius: 999px;
+      border: 1px solid currentColor;
+    }
+    .tag.static  { color: var(--static); }
+    .tag.dynamic { color: var(--dynamic); }
+
+    /* 작품을 직접 보여주는 iframe (링크만 X) */
+    .frame-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 11;
+      background: #000;
+    }
+    .frame-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    footer {
+      max-width: 1100px;
+      margin: 3rem auto 0;
+      color: var(--muted);
+      font-size: .72rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      text-align: center;
+      border-top: 1px solid var(--line);
+      padding-top: 1.5rem;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <p class="eyebrow">Creative Coding · p5.js</p>
+    <h1>나의 <em>p5.js</em> 작품</h1>
+    <p>과제 1~4를 한 페이지에 모았습니다. 왼쪽은 정적(static) 작품, 오른쪽은 동적(dynamic) 작품입니다.</p>
+  </header>
+
+  <main class="grid">
+
+    <!-- 1행: 과제1 | 과제4 -->
+    <article class="card">
+      <div class="card-head">
+        <h2>과제 1</h2>
+        <span class="tag static">Static</span>
+      </div>
+      <div class="frame-wrap">
+        <iframe src="assignment1/index.html" loading="lazy" title="과제 1"></iframe>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <h2>과제 4</h2>
+        <span class="tag dynamic">Dynamic</span>
+      </div>
+      <div class="frame-wrap">
+        <iframe src="assignment4/index.html" loading="lazy" title="과제 4"></iframe>
+      </div>
+    </article>
+
+    <!-- 2행: 과제2 | 과제3 -->
+    <article class="card">
+      <div class="card-head">
+        <h2>과제 2</h2>
+        <span class="tag static">Static</span>
+      </div>
+      <div class="frame-wrap">
+        <iframe src="assignment2/index.html" loading="lazy" title="과제 2"></iframe>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <h2>과제 3</h2>
+        <span class="tag dynamic">Dynamic</span>
+      </div>
+      <div class="frame-wrap">
+        <iframe src="assignment3/index.html" loading="lazy" title="과제 3"></iframe>
+      </div>
+    </article>
+
+  </main>
+
+  <footer>huyendola · Soongsil University · 2026</footer>
+</body>
+</html>
