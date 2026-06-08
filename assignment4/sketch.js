@@ -1,7 +1,7 @@
 let drops = [];
 const SPOUT_X = 322;
 const SPOUT_Y = 225;
-const CUP_TOP = 275; 
+const CUP_TOP = 275; // miệng cốc
 
 function setup() {
   createCanvas(600, 400);
@@ -68,10 +68,10 @@ function draw() {
     d.y += d.vy;
     d.vy += 0.2;
 
-  
+    // tới miệng cốc thì biến mất (không rơi xuyên qua nữa)
     if (d.y >= CUP_TOP) { drops.splice(i, 1); continue; }
 
- 
+    // mờ dần nhẹ ngay trước khi chạm miệng cốc cho tự nhiên
     let a = map(d.y, CUP_TOP - 15, CUP_TOP, 255, 0, true);
 
     noStroke();
